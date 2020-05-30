@@ -1,0 +1,21 @@
+TODOS:
+
+Implement login - Done
+Ensure that you can't do sql injection
+Implement CAPTHCA
+How to deploy flask safely
+SECRET_KEY
+Check for existing name and give suggestions
+Kunna mata in instruktör
+Logga in som kassör/admin/Tränare
+    som admin ska man kunna assigna tränare och få ut information
+Achievements
+Duplicates
+Drop down för kurs och instruktör
+Username och attendee name not case sensitive
+Make sure you can't register twice the same day for the same class.
+Create stats view for trainee
+    Times trained per course
+    Times trained this whole year/season
+
+Create Admin view.

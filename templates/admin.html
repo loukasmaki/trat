@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Users</h1>
+    {% for user in users %}
+        <article class="user_show">
+            <div class="user_list">
+              <div class="user_info">
+                <p>{{ user.id }}, {{ user.username }}, {{ user.role }}</p>
+              </div>
+
+            <div class="field">
+                <label class="label" for="role">Role</label>
+                <div class="control">
+                  <select name="role{{ user.id }}" class="input" value="{{ user.id }}-{{ request.form['role'] }}" selected={{ user.role }}>
+                    <option value="member">member</option>
+                    <option value="Instructor">Instructor</option>
+                    <option value="Admin">Admin</option>
+
+
+                  </select>
+              </div>
+            </div>
+
+        </article>
+
+      {% endfor %}
+      <div class="control">
+        <input type="submit" value="Save" class="button is-primary" />
+      </div>
+  {% endblock %}
