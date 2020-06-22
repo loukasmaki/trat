@@ -14,3 +14,6 @@ HTML, CSS and maybe some Javascript.
 * Stats & Achievements view
 * Login view. 
 
+## Acknowledgements
+This application wouldn't be possible without Miguel Grinbergs "Flask Mega Tutorial"
+if you haven't check it out [here] (http://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-xv-a-better-application-structure)
