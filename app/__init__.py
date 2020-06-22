@@ -90,6 +90,7 @@ def create_app(test_config=None):
         if request.method == 'POST':
 
             role.append(request.form['role'])
+            for each 
 
             if error is None:
                 print(role)
