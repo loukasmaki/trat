@@ -1,18 +1,9 @@
 {% extends 'base.html' %}
+{% 'bootstrap/wtf.html' as wtf  %}
 
-{% block content %}
-    {% for user in users %}
-        <article class="user_show">
-            <div>
-                <p>{{ user.name }}</p>
-            </div>
+{% block app_content %}
+    <h1>Register your attendeence</h1>
+    {{ wtf.quick_form(form) }}
+    <br>
 
-<!--
-            <div>
-                <p>{{ if user.role == 'instructor'}}</p>
-            </div>
--->
-        </article>
-
-      {% endfor %}
-  {% endblock %}
+{% endblock %}
