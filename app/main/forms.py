@@ -5,9 +5,9 @@ from app.models import User
 from flask import request
 
 class RegisterSession(FlaskForm):
-    attendee = StringField('Namn')
-    date = DateField('Datum', format='%Y%m%d')
-    instructor = StringField('Instruktör')
-    weapon_class = StringField('')
+    attendee = StringField('Namn', validators=[DataRequired()])
+    date = DateField('Datum', format='%Y%m%d', validators=[DataRequired()])
+    instructor = StringField('Instruktör', validators=[DataRequired()])
+    weapon_class = StringField('Kurs', validators=[DataRequired()])
 
 

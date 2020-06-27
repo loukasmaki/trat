@@ -1,6 +1,7 @@
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declarative_base
+from app import db, login
 
 Base = declarative_base()
 
@@ -35,3 +36,7 @@ class User(db.Model):
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, server_default=db.func.now(), server_onupdate=db.func.now())
     role = db.Column(db.String(20), server_default='member')
+
+@login.user_loader
+def load_user(id):
+    return User.query.get(int(id))
