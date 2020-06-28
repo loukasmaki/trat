@@ -1,7 +1,7 @@
 from flask import render_template, flash, redirect, url_for, request, g
 from flask_login import current_user, login_required
 from app import db
-from app.models import User, Training_day, Attendee
+from app.models import User, TrainingSession, Attendee
 from app.main import bp
 from app.main.forms import RegisterSession 
 from datetime import datetime
@@ -26,8 +26,8 @@ def index():
         db.session.add(trainingtime)
         db.session.commit()
         flash('Your training session is now registered!')
-        return redirect(url_for('index'))
-    return render_template('index.html', title='Home', form=form)
+        return redirect(url_for('main.index'))
+    return render_template('main/index.html', title='Home', form=form)
 
 ###########################################################
 # Redo index without PostForm just to see if I understand #
