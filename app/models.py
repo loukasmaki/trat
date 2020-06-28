@@ -20,13 +20,21 @@ class Attendee(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), unique=True, nullable=False)
 #    training_dates = db.relationship('TrainingSession', secondary=attendees_trainingsession, back_populates='attendees', lazy='subquery')
+    def __repr__(self):
+        return f'<Attendee {self.username}>'
+
+    def set_instructor(self):
+        self.instructor = True
+
+    def unset_instructor(self):
+        self.instructor = False
 
 class TrainingSession(db.Model):
     __tablename__ = "training_sessions"
     id = db.Column(db.Integer, primary_key=True)
     date = db.Column(db.DateTime, nullable=False)
     weapon = db.Column(db.String(30), nullable=False)
-    instructor = db.Column(db.String(50), server_default='ingen' )
+    instructor = db.Column(db.Array(), server_default='ingen' )
 #    attendees = db.relationship('Attendee',  secondary=attendees_trainingsession, back_populates='training_dates', lazy='subquery')
 
 class User(UserMixin, db.Model):

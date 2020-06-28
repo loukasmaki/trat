@@ -19,11 +19,16 @@ def index():
     form = RegisterSession() 
     if form.validate_on_submit():
         attendee = Attendee.query.filter_by(attendee=form.attendee.data).first_or_404()
-        instructor = Trainin_session.query.filter_by(instructor=form.attendee.data)
-        weapon_class = weapon_class
-        date = date
-        training = Training(date=date, attendee=attendee,)
-        db.session.add(trainingtime)
+        instructor = Attendee.query.filter_by(attendee=form.instructor.data).first_or_404()
+
+        if attendee is None:
+            attendee = Attendee(name=form.attendee.data)
+            db.session.add(attendee)
+
+        weapon_class = form.weapon_class.data
+        date = form.date.data
+        training = Training(date=date, attendee=attendee, weapon_class=weapon_class, instructor=instructor)
+        db.session.add(training)
         db.session.commit()
         flash('Your training session is now registered!')
         return redirect(url_for('main.index'))
