@@ -34,6 +34,3 @@ def index():
         return redirect(url_for('main.index'))
     return render_template('main/index.html', title='Home', form=form)
 
-###########################################################
-# Redo index without PostForm just to see if I understand #
-###########################################################
