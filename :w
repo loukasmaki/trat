@@ -5,7 +5,6 @@ from app.models import User, TrainingSession, Attendee
 from app.main import bp
 from app.main.forms import RegisterSession 
 from datetime import datetime
-from sqlalchemy import and_
 
 #Why did I uncomment this? :'D
 #@bp.before_app_request
@@ -32,37 +31,24 @@ def index():
         if attendee is None:
             print('In second if statement')
             attendee = Attendee(name=form.attendee.data)
-            print('Trying add attendee to session')
             db.session.add(attendee)
 # if the training sessions are in the database then I must search for them and add the data else create the entry in the database.
-        print('form vars')
         weapon_class = form.weapon_class.data
         date = form.date.data
-#        training_session = TrainingSession.query.filter(
-#            and_(TrainingSession.date == date, 
-#                 TrainingSession.weapon_class == weapon_class)).first_or_404()
-
-        query = db.session.query(TrainingSession).filter(
-            TrainingSession.date == date,
-            TrainingSession.weapon_class == weapon_class
-        )
-        training_session = TrainingSession()
-        print(query)
-
-        print('Done with vars')
-        if query is None:
+        training_session = TrainingSession.query.filter_by(date).filter_by(weapon_class)first_or_404()
+        if training_session is None:
             print('in third if statement')
             training_session = TrainingSession(date=date, attendee=attendee, weapon_class=weapon_class, instructor=instructor.id)
         else:
             print('in else statement')
             training_session.date = date
             training_session.weapon_class = weapon_class
-            training_session.set_instructor = form.instructor.data
+            training_session.set_instructor = instructor
 
         attendee.attending.append(training_session)
 
         print('adding to db session')
-
+            
         db.session.add(training_session)
         db.session.commit()
         print("COmmited to db. Supposed to show flash and register pag again")

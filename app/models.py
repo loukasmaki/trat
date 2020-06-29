@@ -19,7 +19,13 @@ class Attendee(db.Model):
     __tablename__ = "attendee"
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), unique=True, nullable=False)
-    attending = db.relationship('TrainingSession', secondary=attendees_trainingsession, backref=db.backref('attendees_trainingsession', lazy='dynamic'), lazy='dynamic')
+    attending = db.relationship(
+        'TrainingSession',  
+        secondary=attendees_trainingsession, 
+        primaryjoin=(attendees_trainingsession.c.attendee_id == id), 
+        backref=db.backref('attendees_trainingsession', 
+                           lazy='dynamic'), 
+        lazy='dynamic')
 
     def __repr__(self):
         return f'<Attendee {self.username}>'
@@ -34,9 +40,15 @@ class TrainingSession(db.Model):
     __tablename__ = "training_sessions"
     id = db.Column(db.Integer, primary_key=True)
     date = db.Column(db.DateTime, nullable=False)
-    weapon = db.Column(db.String(30), nullable=False)
+    weapon_class = db.Column(db.String(30), nullable=False)
     instructor = db.Column(db.String(40), server_default='ingen' )
-    attendees = db.relationship('Attendee',  secondary=attendees_trainingsession, backref=db.backref('attendees_trainingsession', lazy='dynamic'), lazy='dynamic')
+    attendees = db.relationship(
+        'Attendee',  
+        secondary=attendees_trainingsession, 
+        secondaryjoin=(attendees_trainingsession.c.training_session_id == id), 
+        backref=db.backref('attendees_trainingsession', 
+                           lazy='dynamic'), 
+        lazy='dynamic')
 
 class User(UserMixin, db.Model):
     __tablename__ = "users"
@@ -64,6 +76,7 @@ class User(UserMixin, db.Model):
         return jwt.encode(
             {'reset_password': self.id, 'exp': time() + expires_in},
             app.config['SECRET_KEY'], algorithm='HS256').decode('utf-8')
+
 
     @staticmethod
     def verify_reset_password(token):
