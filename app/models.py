@@ -34,7 +34,7 @@ class TrainingSession(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     date = db.Column(db.DateTime, nullable=False)
     weapon = db.Column(db.String(30), nullable=False)
-    instructor = db.Column(db.Array(), server_default='ingen' )
+    instructor = db.Column(db.String(40), server_default='ingen' )
 #    attendees = db.relationship('Attendee',  secondary=attendees_trainingsession, back_populates='training_dates', lazy='subquery')
 
 class User(UserMixin, db.Model):
