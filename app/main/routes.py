@@ -18,23 +18,16 @@ from sqlalchemy import and_
 @bp.route('/index', methods=['GET', 'POST'])
 @login_required
 def index():
-    print('creating form instance')
     form = RegisterSession() 
-    print('validating on submit...')
     if form.validate_on_submit():
-        print('In first IF statement')
-        print ('Now checking if attendee already in database')
         attendee = Attendee.query.filter_by(name=form.attendee.data).first()
 #        print('Checking instructor')
 #        instructor = Attendee.query.filter_by(name=form.instructor.data).first_or_404()
 
 
         if attendee is None:
-            print('In second if statement')
             attendee = Attendee(name=form.attendee.data)
-            print('Trying add attendee to session')
             db.session.add(attendee)
-        print('form vars')
         weapon_class = form.weapon_class.data
         date = form.date.data
 #        training_session = TrainingSession.query.filter(
@@ -46,25 +39,19 @@ def index():
             TrainingSession.weapon_class == weapon_class
         )
         training_session = TrainingSession()
-        print(query)
 
-        print('Done with vars')
         if query is None:
-            print('in third if statement')
             training_session = TrainingSession(date=date, attendee=attendee, weapon_class=weapon_class, instructor=instructor.id)
         else:
-            print('in else statement')
             training_session.date = date
             training_session.weapon_class = weapon_class
             training_session.set_instructor = form.instructor.data
 
         attendee.attending.append(training_session)
 
-        print('adding to db session')
 
         db.session.add(training_session)
         db.session.commit()
-        print("COmmited to db. Supposed to show flash and register pag again")
         flash('Your training session is now registered!')
         return redirect(url_for('main.index'))
     return render_template('main/index.html', title='Home', form=form)
