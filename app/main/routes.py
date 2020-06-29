@@ -34,7 +34,6 @@ def index():
             attendee = Attendee(name=form.attendee.data)
             print('Trying add attendee to session')
             db.session.add(attendee)
-# if the training sessions are in the database then I must search for them and add the data else create the entry in the database.
         print('form vars')
         weapon_class = form.weapon_class.data
         date = form.date.data
