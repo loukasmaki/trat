@@ -10,16 +10,17 @@ from hashlib import md5
 from app import db, login
 
 
-attendees_trainingsession= db.Table('attendees_trainingsession',
-    db.Column('attendee_id', db.Integer, db.ForeignKey('attendee.id'), primary_key=False),
-    db.Column('training_session_id', db.Integer, db.ForeignKey('training_sessions.id'), primary_key=False)
+attendees_trainingsession = db.Table('attendees_trainingsession',
+    db.Column('attendee_id', db.Integer, db.ForeignKey('attendee.id')),
+    db.Column('training_session_id', db.Integer, db.ForeignKey('training_sessions.id'))
     )
 
 class Attendee(db.Model):
     __tablename__ = "attendee"
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), unique=True, nullable=False)
-#    training_dates = db.relationship('TrainingSession', secondary=attendees_trainingsession, back_populates='attendees', lazy='subquery')
+    attending = db.relationship('TrainingSession', secondary=attendees_trainingsession, backref=db.backref('attendees_trainingsession', lazy='dynamic'), lazy='dynamic')
+
     def __repr__(self):
         return f'<Attendee {self.username}>'
 
@@ -35,7 +36,7 @@ class TrainingSession(db.Model):
     date = db.Column(db.DateTime, nullable=False)
     weapon = db.Column(db.String(30), nullable=False)
     instructor = db.Column(db.String(40), server_default='ingen' )
-#    attendees = db.relationship('Attendee',  secondary=attendees_trainingsession, back_populates='training_dates', lazy='subquery')
+    attendees = db.relationship('Attendee',  secondary=attendees_trainingsession, backref=db.backref('attendees_trainingsession', lazy='dynamic'), lazy='dynamic')
 
 class User(UserMixin, db.Model):
     __tablename__ = "users"
