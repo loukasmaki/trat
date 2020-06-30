@@ -26,6 +26,10 @@ def index():
         # Still need to implement instructor check
 #        print('Checking instructor')
 #        instructor = Attendee.query.filter_by(name=form.instructor.data).first_or_404()
+#        put a pin in that until I have decided how training sessions gets defined. 
+        query = db.session.query(Attendee).filter(
+            Attendee.name == form.instructor.data,
+            Attendee.instructor == True)
 
 
         if attendee is None:
@@ -69,5 +73,15 @@ def index():
         db.session.commit()
         flash('Your training session is now registered!')
         return redirect(url_for('main.index'))
-    return render_template('main/index.html', title='Home', form=form)
+    registered_attendees = Attendee.query.filter(Attende.name == form.attendee.data, )
+
+    return render_template('main/index.html', title='Home', form=form, registered_attendees=registered_attendees.items)
+
+@bp.route('/admin', methods=['GET', 'POST'])
+@login_required
+def admin():
+    # Admin view is for assigning instructors
+    # Adding and changing schedule
+
+    attendees = Attendee.query.order_by()
 

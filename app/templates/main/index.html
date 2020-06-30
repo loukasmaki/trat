@@ -7,7 +7,14 @@
 	    <div class="col-md-4">
 		    {{ wtf.quick_form(form) }}
 	    </div>
-    </div> 
+
+    </div>
     <br>
+    <div>
+	    <h2 Title {# Insert current class  #}></h2>
+	    {% for registered_attendee in registered_attendees %}
+	        {% include _registered_attendee.html %}
+	    {% endfor %}
+    </div>
 
 {% endblock %}
