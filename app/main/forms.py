@@ -20,12 +20,21 @@ class RegisterSession(FlaskForm):
     submit = SubmitField('Registrera')
 
 class AdminAttendee(FlaskForm):
-    
+    set_instructor = BooleanField('Instruktör')
+
     pass
 
 
 
 class Schedule(FlaskForm):
+    # Sätt en vecka och sprid ut den över hela året
+    # Terminsstart och Terminsslut för respektive termin
+    # Datum
+    # Hall A eller B Dold tills vi kan utnyttja
+    # Om vardag tidslott 1 eller 2. Om helg mer valmöjligheter
+    # Klumpigt men duger tills jag kommer på något bättre. 
+    # Vad händer om man ändrar mitt i terminen?
+    # 
     weapon_class = RadioField(choices=[
         'Brottning', 
         'Långsvärd Grundkurs', 
@@ -35,5 +44,6 @@ class Schedule(FlaskForm):
         'Svärd & Bucklare', 
         'Barn & Ungdom'
     ], validators=[DataRequired()])
+    submit = SubmitField('Spara Schema')
 
 
