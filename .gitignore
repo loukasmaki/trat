@@ -133,3 +133,5 @@ dmypy.json
 
 # Random user added stuff
 *_flmt 
+app.db
+
