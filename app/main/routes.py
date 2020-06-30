@@ -6,6 +6,8 @@ from app.main import bp
 from app.main.forms import RegisterSession 
 from datetime import datetime
 from sqlalchemy import and_
+import datetime
+from datetime import timedelta
 
 #Why did I uncomment this? :'D
 #@bp.before_app_request
@@ -21,6 +23,7 @@ def index():
     form = RegisterSession() 
     if form.validate_on_submit():
         attendee = Attendee.query.filter_by(name=form.attendee.data).first()
+        # Still need to implement instructor check
 #        print('Checking instructor')
 #        instructor = Attendee.query.filter_by(name=form.instructor.data).first_or_404()
 
@@ -28,8 +31,20 @@ def index():
         if attendee is None:
             attendee = Attendee(name=form.attendee.data)
             db.session.add(attendee)
+
         weapon_class = form.weapon_class.data
+
         date = form.date.data
+        today = date.today()
+
+        if date > today:
+            flash('Can\'t register a date in the future')
+
+            return redirect(url_for('main.index'))
+
+
+        if date > today:
+            pass
 #        training_session = TrainingSession.query.filter(
 #            and_(TrainingSession.date == date, 
 #                 TrainingSession.weapon_class == weapon_class)).first_or_404()
