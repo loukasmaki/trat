@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% import 'bootstrap/wtf.html' as wtf  %}
+
+{% block app_content %}
+    <h1>Manage attendees and Schedule</h1>
+    <div class="row">
+	    <div class="col-md-4">
+		    {% for attendee in attendees %}
+		    <p>{{ attendee.name }}
+			    {{ wtf.quick_form(form_admin) }}
+		    {% endfor %}
+	    </div>
+
+    </div>
+    <br>
+    <div>
+	    <h2 Title {# Insert current class  #}></h2>
+	    {% for registered_attendee in registered_attendees %}
+	        {% include _registered_attendee.html %}
+	    {% endfor %}
+    </div>
+
+{% endblock %}

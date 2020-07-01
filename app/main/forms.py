@@ -1,32 +1,28 @@
 from  flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, DateField, RadioField
+from wtforms import StringField, SubmitField, DateField, SelectField, HiddenField, BooleanField
 from wtforms.validators import DataRequired, ValidationError, Email, EqualTo, Length
 from app.models import User
 from flask import request
+from config import Config
 
-class RegisterSession(FlaskForm):
+class RegisterSessionForm(FlaskForm):
     attendee = StringField('Förnamn och efternamn', validators=[DataRequired()])
     date = DateField('Datum', format='%Y%m%d', validators=[DataRequired()])
     instructor = StringField('Instruktör', validators=[DataRequired()])
-    weapon_class = RadioField(choices=[
-        'Brottning', 
-        'Långsvärd Grundkurs', 
-        'Långsvärd Fortsättning', 
-        'Sabel', 
-        'Rapir & Dolk', 
-        'Svärd & Bucklare', 
-        'Barn & Ungdom'
-    ], validators=[DataRequired()])
+    weapon_class = SelectField('Kurs',choices=Config.weapon_class_list, 
+                              validators=[DataRequired()])
     submit = SubmitField('Registrera')
 
-class AdminAttendee(FlaskForm):
-    set_instructor = BooleanField('Instruktör')
+class AdminAttendeeForm(FlaskForm):
+
+    instructor = BooleanField('Instruktör')
+    submit = SubmitField()
 
     pass
 
 
 
-class Schedule(FlaskForm):
+class ScheduleForm(FlaskForm):
     # Sätt en vecka och sprid ut den över hela året
     # Terminsstart och Terminsslut för respektive termin
     # Datum
@@ -35,15 +31,8 @@ class Schedule(FlaskForm):
     # Klumpigt men duger tills jag kommer på något bättre. 
     # Vad händer om man ändrar mitt i terminen?
     # 
-    weapon_class = RadioField(choices=[
-        'Brottning', 
-        'Långsvärd Grundkurs', 
-        'Långsvärd Fortsättning', 
-        'Sabel', 
-        'Rapir & Dolk', 
-        'Svärd & Bucklare', 
-        'Barn & Ungdom'
-    ], validators=[DataRequired()])
+    weapon_class = SelectField(choices=Config.weapon_class_list,
+    validators=[DataRequired()])
     submit = SubmitField('Spara Schema')
 
 

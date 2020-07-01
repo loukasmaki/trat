@@ -17,8 +17,9 @@ attendees_trainingsession = db.Table('attendees_trainingsession',
 
 class Attendee(db.Model):
     __tablename__ = "attendee"
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True, unique=True)
     name = db.Column(db.String(80), unique=True, nullable=False)
+    instructor = db.Column(db.Boolean(), default=False)
     attending = db.relationship(
         'TrainingSession',  
         secondary=attendees_trainingsession, 
