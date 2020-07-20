@@ -132,6 +132,6 @@ dmypy.json
 .pyre/
 
 # Random user added stuff
-*_flmt 
+*flmt 
 app.db
 
