@@ -1,20 +1,13 @@
-from flask import render_template, flash, redirect, url_for, request, g
+from flask import render_template, flash, redirect, url_for, request, g, jsonify
 from flask_login import current_user, login_required
 from app import db
 from app.models import User, TrainingSession, Attendee
 from app.main import bp
 from app.main.forms import RegisterSessionForm, AdminAttendeeForm, ScheduleForm 
-from datetime import datetime
+from datetime import datetime, timedelta
 from sqlalchemy import and_
 import datetime
-from datetime import timedelta
 
-#Why did I uncomment this? :'D
-#@bp.before_app_request
-#def before_request():
-#    if current_user.is_authenticated:
-#        current_user.last_seen = datetime.utcnow()
-#        db.session.commit()
 
 @bp.route('/', methods=['GET', 'POST'])
 @bp.route('/index', methods=['GET', 'POST'])
@@ -46,8 +39,6 @@ def index():
             return redirect(url_for('main.index'))
 
 
-        if date > today:
-            pass
 #        training_session = TrainingSession.query.filter(
 #            and_(TrainingSession.date == date, 
 #                 TrainingSession.weapon_class == weapon_class)).first_or_404()
@@ -90,11 +81,15 @@ def admin():
     form_admin = AdminAttendeeForm()
     form_schedule = ScheduleForm()
     if form_admin.validate_on_submit:
+        print('Here comes the data!')
+        print(dir(form_admin))
+        print(form_admin.data)
+        print(form_admin.instructor)
+
         attendees = Attendee.query.order_by(Attendee.name)
         for attendee in attendees:
-            form_admin = AdminAttendeeForm()
             attendee.instructor = form_admin.instructor.data
-            
+
             db.session.add(attendee)
             db.session.commit()
             flash(f'{attendee.name} is now instructor {attendee.instructor}')
@@ -111,6 +106,7 @@ def admin():
     attendees = Attendee.query.order_by()
     return render_template('main/admin.html', title='Admin', form_admin=form_admin,form_schedule=form_schedule, attendees=attendees, )
 
+
 @bp.route('/schedule', methods=['GET', 'POST'])
 @login_required
 def schedule():
@@ -126,4 +122,16 @@ def  adminstats():
 @login_required
 def attendeestats():
     pass
+
+@bp.route('/set_instructor', methods=['POST'])
+@login_required
+def set_instructor():
+
+    form_data = request.form
+    print(request.form)
+    id = request.args
+
+
+
+
 

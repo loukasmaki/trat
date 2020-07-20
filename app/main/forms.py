@@ -16,11 +16,8 @@ class RegisterSessionForm(FlaskForm):
 class AdminAttendeeForm(FlaskForm):
 
     instructor = BooleanField('Instruktör')
+    attendee_id = HiddenField(default=1)
     submit = SubmitField()
-
-    pass
-
-
 
 class ScheduleForm(FlaskForm):
     # Sätt en vecka och sprid ut den över hela året
@@ -34,5 +31,4 @@ class ScheduleForm(FlaskForm):
     weapon_class = SelectField(choices=Config.weapon_class_list,
     validators=[DataRequired()])
     submit = SubmitField('Spara Schema')
-
 

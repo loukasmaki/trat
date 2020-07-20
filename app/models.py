@@ -37,6 +37,9 @@ class Attendee(db.Model):
     def unset_instructor(self):
         self.instructor = False
 
+    def as_dict(self):
+        return {'id': self.id, 'name': self.name, 'instructor': self.instructor}
+
 class TrainingSession(db.Model):
     __tablename__ = "training_sessions"
     id = db.Column(db.Integer, primary_key=True)
