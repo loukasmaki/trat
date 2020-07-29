@@ -2,12 +2,13 @@
 	    <div class="row">
 		    <div class="col-md-4">
 			    <p>{{ attendee.name }}
-			    <form action="" method="post" id="{{ attendee.id }}"  novalidate>
+			    <form action="" method="post" class="{{ attendee.id }}"  novalidate>
 				    {{ form_admin.hidden_tag() }}
 				    <p>
 			    		{{ form_admin.instructor.label }}
-					{{ form_admin.instructor(id=attendee.id) }}
-					{{ form_admin.submit(id=attendee.id) }}
+					{{ form_admin.attendee_id(value=attendee.id) }}
+					{{ form_admin.instructor(class=attendee.id) }}
+					{{ form_admin.submit(class=attendee.id) }}
 
 				    </p>
 			    

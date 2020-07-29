@@ -81,10 +81,10 @@ def admin():
     form_admin = AdminAttendeeForm()
     form_schedule = ScheduleForm()
     if form_admin.validate_on_submit:
-        print('Here comes the data!')
-        print(dir(form_admin))
-        print(form_admin.data)
-        print(form_admin.instructor)
+#        print('Here comes the data!')
+#        print(dir(form_admin))
+#        print(form_admin.data)
+#        print(form_admin.instructor)
 
         attendees = Attendee.query.order_by(Attendee.name)
         for attendee in attendees:
@@ -129,7 +129,13 @@ def set_instructor():
 
     form_data = request.form
     print(request.form)
-    id = request.args
+    attendee_id = request.form['id']
+    instructor = request.form['instructor']
+    print('This is a test')
+    print(f'id : {attendee_id}')
+    print(f'instructor : {instructor}')
+    return redirect(url_for('main.admin'))
+     
 
 
 
